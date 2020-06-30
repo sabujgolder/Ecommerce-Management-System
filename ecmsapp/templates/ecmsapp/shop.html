@@ -1,0 +1,88 @@
+{% extends 'ecmsapp/main.html' %}
+{% block  content %}
+<br>
+
+<style>
+	.product-pic{
+		max-width: 100px;
+		max-height:100px;
+		margin: 0 auto;
+    border-radius: 5%;
+	}
+</style>
+
+    <h2 class="text-center">{% for shop in shops %}{{shop.shop_name}} {% endfor %} Statistics</h2>
+    <br>
+
+    <div class="row">
+    	<div class="col">
+    		<div class="col-md">
+    			<div class="card text-center text-white  mb-10" id="total-orders">
+    			  	<div class="card-header">
+    			  		<h5 class="card-title">Total Orders</h5>
+    			  	</div>
+    			  	<div class="card-body">
+    			    	<h3 class="card-title">{{total_orders}}</h3>
+    			  	</div>
+    			</div>
+    		</div>
+    	</div>
+
+    	<div class="col">
+    		<div class="col-md">
+    			<div class="card text-center text-white  mb-5" id="orders-delivered">
+    			  	<div class="card-header">
+    			  		<h5 class="card-title">Orders Delivered</h5>
+    			  	</div>
+    			  	<div class="card-body">
+    			    	<h3 class="card-title">{{delivered}}</h3>
+    			  	</div>
+    			</div>
+    		</div>
+    	</div>
+
+    	<div class="col">
+    		<div class="col-md">
+    			<div class="card text-center text-white  mb-5" id="orders-pending">
+    			  	<div class="card-header">
+    			  		<h5 class="card-title">Orders Pending</h5>
+    			  	</div>
+    			  	<div class="card-body">
+    			    	<h3 class="card-title">{{pending}}</h3>
+    			  	</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    <a href="{% url 'products' shop_owner_data.id %}">See Products</a>
+    <a href="{% url 'add_product' shop_owner_data.id %}">Add Products</a>
+
+    <table class="table" >
+      <tr>
+        <th>Product Name</th>
+        <th>Delivery Status</th>
+        <th>Customer Name</th>
+        <th>Order Date</th>
+        <th>Product Pic</th>
+      </tr>
+        <h2 class="text-center">Orders</h2>
+        {% for orders in l %}
+          {% for order in orders %}
+          <tr>
+            <td>{{order.product.name}}</td>
+            <td>{{order.status}}</td>
+            <td>{{order.customer.name}}</td>
+            <td>{{order.date_created}}</td>
+            <td ><img src="{{order.product.product_pic.url}}" class="product-pic"></td>
+          {% endfor %}
+        {% endfor %}
+
+    </table>
+
+<h1>Order list</h1>
+
+    {% for i in order_list %}
+      {{i}},
+    {% endfor %}
+
+{% endblock %}

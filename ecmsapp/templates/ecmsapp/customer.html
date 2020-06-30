@@ -1,0 +1,11 @@
+{% extends 'ecmsapp/main.html' %}
+{% block  content %}
+  <h2>Customer Information</h2>
+  Name : {{customer_data.name}}<br>
+  Phone : {{customer_data.phone}}<br>
+  Email : {{customer_data.email}}<br>
+  Joined On :{{customer_data.date_created}}<br>
+  {{customer_data.prfile_pic}}
+  <br>
+  <a href="{% url 'create_order' customer_data.id %}">Create Orders</a>
+{% endblock %}

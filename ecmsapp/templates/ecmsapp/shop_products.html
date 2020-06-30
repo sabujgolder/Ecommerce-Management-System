@@ -1,0 +1,32 @@
+{% extends 'ecmsapp/main.html' %}
+{% block  content %}
+  <h1>Products List</h1>
+  <form method="get">
+    <!-- {% csrf_token %} -->
+    {{ SearchFilter.form }}
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  <table class="table" >
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Date Created</th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    {% for product in products %}
+      <tr>
+        <td>{{product.name}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.date_created}}</td>
+        <td><a href="{% url 'update_product' product.id %}">Update</a></td>
+        <td><a href="{% url 'delete_product' product.id %}">Delete</a></td>
+
+    {% endfor %}
+
+  </table>
+
+  <a href="{% url 'bulk_product_update' shop_owner_data.id %}">Bulk Update</a>
+
+{% endblock %}

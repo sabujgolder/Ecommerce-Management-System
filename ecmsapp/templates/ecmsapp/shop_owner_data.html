@@ -1,0 +1,12 @@
+{% extends 'ecmsapp/main.html' %}
+{% block  content %}
+  <h2>Shop Owner Information</h2>
+  Name : {{shop_owner_data.name}}<br>
+  Phone : {{shop_owner_data.phone}}<br>
+  Email : {{shop_owner_data.email}}<br>
+  Joined On :{{shop_owner_data.date_created}}<br>
+  Shop Owner Id : {{shop_owner_data.id}}<br>
+  Shop_name :{% for shop in shops %} {{ shop.shop_name }}  {% endfor %}<br>
+  {{shop_owner_data.prfile_pic}}<br>
+  Total_Products : {{total_product}}
+{% endblock %}

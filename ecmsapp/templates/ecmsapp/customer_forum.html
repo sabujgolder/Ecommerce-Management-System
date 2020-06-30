@@ -1,0 +1,33 @@
+{% extends 'ecmsapp/main.html' %}
+{% block content %}
+
+<style>
+  .post-pic{
+    max-width: 250px;
+    max-height:150px;
+    margin: 0 auto;
+
+  }
+  .forum-pic{
+    max-width: 250px;
+    max-height:150px;
+    margin: 0 auto;
+
+  }
+</style>
+<br>
+<h3 class="text-center">All Customer Posts</h3>
+<div class="row ">
+      {% for Post in Posts %}
+      <div class="col-md-3">
+        <div class="card card-body  pt-2 pl-2 pb-2">
+              <img class="post-pic" src="{{Post.post_picutre.url}}" alt="">
+              <a href="{% url 'customer' Post.customer.id %}">{{Post.customer.name}} Said,</a>
+              {{Post.post}}<br>
+              Posted On :{{Post.date_created}}<br>
+        </div>
+      </div>
+      {% endfor %}
+</div>
+
+{% endblock %}

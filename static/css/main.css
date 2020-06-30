@@ -1,0 +1,59 @@
+.profile-pic{
+  max-width: 200px;
+  max-height:200px;
+  margin: 0 auto;
+  /* border-radius: 50%; */
+}
+.content_container{
+  /* float : left; */
+  max-width: 300px;
+  max-height:300px;
+  margin: 0 auto;
+  /* border-radius: 50%; */
+}
+
+.left_container{
+  width: 60%;
+  float: left;
+  margin: 0 auto;
+}
+.right_container{
+  width: 40%;
+  float : right;
+}
+.whole_container{
+  display : inline_block;
+}
+
+body{
+	background-color: #ebeff5;
+}
+
+#total-orders{
+  background-color: #7abecc;
+}
+
+#orders-delivered{
+	background-color: #7abecc;
+}
+
+#orders-pending{
+	background-color: #7CD1C0;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.chart--container {
+  height: 50%;
+  width: 35%;
+  /* min-height: 150px; */
+}
+
+.zc-ref {
+  display: none;
+}

@@ -1,0 +1,93 @@
+{%  extends 'ecmsapp/main.html' %}
+{% load static %}
+{% block content %}
+  <style>
+  	.post-pic{
+  		max-width: 250px;
+  		max-height:150px;
+  		margin: 0 auto;
+
+  	}
+    .forum-pic{
+      max-width: 250px;
+      max-height:150px;
+      margin: 0 auto;
+
+    }
+  </style>
+  <div class="row ">
+    <div class="card card-body pt-1 pl-1 pb-1">
+      <div class="row">
+        {% for Post in Posts %}
+        <div class="col-md-3">
+          <div class="card card-body  pt-2 pl-2 pb-2">
+                <img class="post-pic" src="{{Post.post_picutre.url}}" alt="">
+                <a href="{% url 'customer' Post.customer.id %}">{{Post.customer.name}} Said,</a>
+                {{Post.post}}<br>
+                Posted On :{{Post.date_created}}<br>
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="col-md-3 ">
+          <div class="card card-body  pt-1 pl-1 pb-1">
+            <h3 style="text-align: center;padding: 10px">
+
+               <a href="{% url 'customer_forum' %}">
+                 Customer Discussion Forum
+                 <img class="forum-pic" src="static\images\customer_blog.jpg" >
+                </a>
+            </h3>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card card-body pt-1 pl-1 pb-1">
+      <div class="row">
+        {% for Post in Shop_Owner_Posts %}
+        {% if user.groups.all.0.name == "admin" %}
+          <div class="col-md-3">
+            <div class="card card-body  pt-2 pl-2 pb-2">
+                  <img class="post-pic" src="{{Post.post_picutre.url}}" alt="">
+                  <a href="{% url 'shop_owner' Post.shop_owner.id %}">{{Post.shop_owner.name}}</a>
+        {% elif request.user.username == Post.shop_owner.name %}
+          <div class="col-md-3">
+            <div class="card card-body  pt-2 pl-2 pb-2">
+                  <img class="post-pic" src="{{Post.post_picutre.url}}" alt="">
+                  <a href="{% url 'shop_owner' Post.shop_owner.id %}">{{Post.shop_owner.name}}</a>
+        {% else %}
+          <div class="col-md-3">
+            <div class="card card-body  pt-2 pl-2 pb-2">
+                  <img class="post-pic" src="{{Post.post_picutre.url}}" alt="">
+                  <a href="{% url 'shop_owner_data' Post.shop_owner.id %}">{{Post.shop_owner.name}}</a>
+        {% endif %}
+                  {{Post.post}}<br>
+                  Posted On :{{Post.date_created}}<br>
+            </div>
+          </div>
+        {% endfor %}
+
+
+        <div class="col-md-3 ">
+          <div class="card card-body  pt-1 pl-1 pb-1">
+            <h3 style="text-align: center;padding: 10px">
+
+               <a href="{% url 'shop_owners_forum' %}">
+                 Shop Owner's Forum
+                 <img class="forum-pic" src="static\images\shop_blog.jpg" >
+                </a>
+            </h3>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+
+    </div>
+
+
+{% endblock %}
