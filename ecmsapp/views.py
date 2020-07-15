@@ -6,6 +6,7 @@ from .filters import ProductFilter,OrderFilter
 from .forms import *
 from .decorators import *
 
+from django.contrib.auth.models import Group
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.models import User
@@ -31,19 +32,30 @@ def login_view(request):
 
 @unauthenticated_user
 def registerPage(request):
+    form = UserRegisterForm()
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, 'Account was created for ' + username)
+            user_status = form.cleaned_data.get('user_status').lower()
+            if user_status == 'customer':
+                group = Group.objects.get(name='customer')
+                user.groups.add(group)
+                Customer.objects.create(
+                    user=user,
+                    name=user.username,)
+            elif user_status =='shop owner':
+                group = Group.objects.get(name='shop owner')
+                user.groups.add(group)
+                Shop_Owner.objects.create(
+                    user=user,
+                    name=user.username,)
+            return redirect('login')
 
-	form = CreateUserForm()
-	if request.method == 'POST':
-		form = CreateUserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			username = form.cleaned_data.get('username')
-			messages.success(request, 'Account was created for ' + username)
-			return redirect('login')
-
-
-	context = {'form':form}
-	return render(request, 'ecmsapp/register.html', context)
+    context = {'form':form}
+    return render(request, 'ecmsapp/register.html', context)
 
 
 def logoutUser(request):
@@ -72,10 +84,10 @@ def shop_owners_forum(request):
 def customer(request,pk):
     customer_data = Customer.objects.get(id=pk)
     orders = customer_data.order_set.all()
-
+    total = orders.count()
     SearchFilter = OrderFilter(request.GET , queryset = orders)
     orders = SearchFilter.qs
-    return render(request,'ecmsapp/customer_temp.html',{'customer_data':customer_data,'orders':orders,'SearchFilter':SearchFilter})
+    return render(request,'ecmsapp/customer_temp.html',{'customer_data':customer_data,'orders':orders,'SearchFilter':SearchFilter,'total':total})
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin','shop owner'])
@@ -95,9 +107,20 @@ def shop(request,pk):
 
     # Get Order numbers for each product
     l=[]
+    delivered = 0
+    pending = 0
     for product in products:
         item = Product.objects.get(id=product.id)
         orderset = item.order_set.all()
+
+        # get total delivered orders
+        delivered = delivered+orderset.filter(status='Delivered').count()
+
+        # get total pending orders
+        pending = pending+orderset.filter(status='Pending').count()
+
+
+
         l.append(orderset)
 
     order_list=[]
@@ -110,9 +133,11 @@ def shop(request,pk):
     for i in range(len(order_list)):
         total_orders = total_orders + order_list[i]
 
+
     shops = shop_owner_data.shop_set.all()
     return render(request,'ecmsapp/shop.html',{'shops':shops,'shop_owner_data':shop_owner_data,
                                                 'products':products,'order_list':order_list,
+                                                'delivered':delivered,'pending':pending,
                                                 'total_orders':total_orders,'l':l})
 
 
@@ -259,3 +284,20 @@ def order_search(request,pk):
     SearchFilter = ProductFilter(request.GET , queryset = orders)
     orders = SearchFilter.qs
     return render(request,'ecmsapp/customer_temp.html',{'orders':orders,'SearchFilter':SearchFilter,'customer_data':customer_data})
+
+@login_required(login_url='login')
+def customer_post_detail(request,pk):
+    post = Customer_Post.objects.get(id=pk)
+    return render(request,'ecmsapp/customer_post_detail.html',{'Post':post})
+
+@login_required(login_url='login')
+def shop_owner_post_detail(request,pk):
+    post = Shop_Owner_Post.objects.get(id=pk)
+    return render(request,'ecmsapp/shop_owner_post_detail.html',{'Post':post})
+
+
+@login_required(login_url='login')
+@admin_only
+def all_shops(request):
+    shops = Shop.objects.all()
+    return render(request,'ecmsapp/all_shops.html',{'shops':shops})

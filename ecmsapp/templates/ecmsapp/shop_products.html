@@ -1,32 +1,54 @@
 {% extends 'ecmsapp/main.html' %}
+{% load static %}
 {% block  content %}
-  <h1>Products List</h1>
+<br>
+<style>
+	.product_pic{
+		max-width: 100px;
+		max-height:100px;
+		margin: 0 auto;
+    border-radius: 5%;
+	}
+</style>
+<h3 class="text-center">
   <form method="get">
     <!-- {% csrf_token %} -->
     {{ SearchFilter.form }}
     <button class="btn btn-primary" type="submit">Search</button>
   </form>
+</h3>
+
+<br>
+  <h1 class="text-center">Products List</h1>
   <table class="table" >
     <tr>
+      <th>Prodcut ID</th>
       <th>Product</th>
+			<th>Description</th>
+      <th>Product Pic</th>
       <th>Price</th>
-      <th>Date Created</th>
-      <th></th>
-      <th></th>
+      <th>Product Created On</th>
+      <th>Update</th>
+      <th>Delete</th>
     </tr>
 
     {% for product in products %}
       <tr>
+        <td>{{product.id}}</td>
         <td>{{product.name}}</td>
+				<td>{{product.description}}</td>
+        <td> <img src="{{product.product_pic.url}}" class="product_pic"></td>
         <td>{{product.price}}</td>
         <td>{{product.date_created}}</td>
-        <td><a href="{% url 'update_product' product.id %}">Update</a></td>
-        <td><a href="{% url 'delete_product' product.id %}">Delete</a></td>
+        <td><a class="btn btn-primary btn-sm" href="{% url 'update_product' product.id %}">Update</a></td>
+        <td><a class="btn btn-danger btn-sm" href="{% url 'delete_product' product.id %}">Delete</a></td>
 
     {% endfor %}
 
   </table>
 
-  <a href="{% url 'bulk_product_update' shop_owner_data.id %}">Bulk Update</a>
+<br>
+
+  <h4 class="text-center">Update Several Products At A Time : <a class="btn btn-info" href="{% url 'bulk_product_update' shop_owner_data.id %}">Bulk Update</a></h4>
 
 {% endblock %}

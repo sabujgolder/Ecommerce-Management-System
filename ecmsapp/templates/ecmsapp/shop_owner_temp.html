@@ -19,20 +19,9 @@
 </style>
 
 <div class="row">
-<!--
-	<div class="col-md">
-		<div class="card card-body">
-			<h5 class="text-center">Shop Owner</h5>
-			<hr>
-			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Profile</a>
-			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'add_product' shop_owner_data.id %}">Add Products</a>
 
-		</div>
-	</div> -->
 	<div class="col-md-4">
 		<div class="card card-body">
-			<!-- <a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Profile</a> -->
-			<!-- <hr> -->
 			<img class="profile-pic" src="{{shop_owner_data.prfile_pic.url}}" >
 			<hr>
 			<h3 >Personal Details</h3>
@@ -46,7 +35,11 @@
 		<div class="row">
 						<div class="col-md-6">
 							<div class="card card-body">
-								<h5 class="text-center">Your Shop</h5>
+								{% if user.groups.all.0.name == "admin" %}
+									<h5 class="text-center">Shop</h5>
+								{% else %}
+									<h5 class="text-center">Your Shop</h5>
+								{% endif %}	
 								<h1 style="text-align: center;padding: 10px">
 									{% for shop in shops %}
 									 <a href="{% url 'shop' shop_owner_data.id %}">

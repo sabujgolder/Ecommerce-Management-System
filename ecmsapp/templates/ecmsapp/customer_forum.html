@@ -22,8 +22,9 @@
       <div class="col-md-3">
         <div class="card card-body  pt-2 pl-2 pb-2">
               <img class="post-pic" src="{{Post.post_picutre.url}}" alt="">
-              <a href="{% url 'customer' Post.customer.id %}">{{Post.customer.name}} Said,</a>
-              {{Post.post}}<br>
+              <b>{{Post.customer.name}} Said,</b>
+              {{Post.post|safe|truncatewords:"6"}}
+              <a href="{% url 'post_detail' Post.id %}">Detail</a>
               Posted On :{{Post.date_created}}<br>
         </div>
       </div>

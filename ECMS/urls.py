@@ -21,6 +21,7 @@ urlpatterns = [
     path('shop_owner_data/<str:pk>/',views.shop_owner_data,name='shop_owner_data'),
     path('shop_owner/<str:pk>/',views.shop_owner,name='shop_owner'),
     path('shop/<str:pk>/',views.shop,name='shop'),
+    path('all_shops/',views.all_shops,name='all_shops'),
 
     path('add_product/<str:pk>/',views.add_products,name='add_product'),
     path('products/<str:pk>/',views.products,name='products'),
@@ -37,6 +38,10 @@ urlpatterns = [
 
     path('update_order/<str:pk>/',views.Update_Order,name='update_order'),
     path('delete_order/<str:pk>/',views.Delete_Order,name='delete_order'),
+
+    path('post_details/<str:pk>/',views.customer_post_detail,name='post_detail'),
+    path('shop_owner_post_detail/<str:pk>/',views.shop_owner_post_detail,name='shop_owner_post_detail'),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,43 @@
+{% extends 'ecmsapp/main.html' %}
+{% block content %}
+
+<style>
+  .post-pic{
+    max-width: 250px;
+    max-height:150px;
+    margin: 0 auto;
+
+  }
+  .forum-pic{
+    max-width: 250px;
+    max-height:150px;
+    margin: 0 auto;
+
+  }
+</style>
+<br>
+<h3 class="text-center">All Shops</h3>
+<div class="col ">
+  <div class="row">
+    {% for shop in shops %}
+    <div class="col-md-4">
+      <div class="card card-body  pt-2 pl-2 pb-2">
+            <img class="post-pic" src="{{shop.shop_picture.url}}" alt="">
+            <h5 class="text-center"><a href="{% url 'shop' shop.id %}">{{shop.shop_name}}</a></h5><br>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card card-body  pt-2 pl-2 pb-2">
+            Shop Owner :{{shop.shop_owner}}<br>
+            Id : {{shop.id}}<br>
+            Address : {{shop.address}}<br>
+            Date Created : {{shop.date_created}}<br>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}

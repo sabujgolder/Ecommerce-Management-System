@@ -1,0 +1,44 @@
+{% extends 'ecmsapp/main.html' %}
+{% block content %}
+<style>
+  .profile-pic{
+    max-width: 250px;
+    max-height:250px;
+    margin: 0 auto;
+
+  }
+  .post-pic{
+    max-width: 250px;
+    max-height:2500px;
+    margin: 0 auto;
+
+  }
+</style>
+<br>
+<div class="row mb-4">
+  <div class="col-md-4">
+    <div class="card card-body mb-5">
+      <h3 class="text-center">Posted By : {{Post.customer.name}}</h3>
+      <img class="profile-pic" src="{{Post.customer.profile_pic.url}}" alt="">
+      <h4 class="text-center"><a  href="{% url 'customer' Post.customer.id %}"> See Profile </a></h4>
+      <a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Go Back</a>
+
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card card-body mb-5">
+          <img class="post-pic" src="{{Post.post_picutre.url}}" alt="">
+          <b>Posted By : </b>{{Post.customer.name}} <br>
+          <hr>
+          <b>Post :</b> {{Post.post}}<br>
+          <hr>
+          <b>Posted On :</b>{{Post.date_created}}<br>
+    </div>
+  </div>
+  <div class="col-md-4">
+
+  </div>
+
+</div>
+
+{% endblock %}

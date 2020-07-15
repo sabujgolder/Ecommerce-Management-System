@@ -8,7 +8,7 @@ class Shop_Owner(models.Model):
     name = models.CharField(max_length=128,null=True)
     phone = models.CharField(max_length=20,null=True)
     email = models.EmailField(max_length=128,null=True)
-    prfile_pic = models.ImageField(null=True,blank=True)
+    prfile_pic = models.ImageField(default="profile1.png",null=True,blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -19,7 +19,7 @@ class Customer(models.Model):
     name = models.CharField(max_length=128,null=True)
     phone = models.CharField(max_length=20,null=True)
     email = models.EmailField(max_length=128,null=True)
-    profile_pic = models.ImageField(default="profile2.png",null=True,blank=True)
+    profile_pic = models.ImageField(default="profile1.png",null=True,blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -59,7 +59,7 @@ class Product(models.Model):
     name = models.CharField(max_length=128,null=True)
     price = models.DecimalField(null=True,max_digits=10, decimal_places=4)
     description = models.CharField(max_length=128,null=True)
-    product_pic = models.ImageField(null=True,blank=True)
+    product_pic = models.ImageField(default="default_product.jpg",null=True,blank=True)
     product_tag = models.ManyToManyField(Product_Tag)
     date_created = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=128,choices = CATEGORY)

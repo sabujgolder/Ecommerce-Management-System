@@ -15,6 +15,19 @@
     <br>
 
     <div class="row">
+			<div class="col">
+				<div class="col-md">
+					<div class="card text-center text-white  mb-10" id="block">
+
+							<div class="card-body">
+								<h3 class="card-title">
+									  <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'products' shop_owner_data.id %}">See Products</a>
+								    <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'add_product' shop_owner_data.id %}">Add Products</a></h3>
+							</div>
+					</div>
+				</div>
+			</div>
+
     	<div class="col">
     		<div class="col-md">
     			<div class="card text-center text-white  mb-10" id="total-orders">
@@ -54,8 +67,7 @@
     		</div>
     	</div>
     </div>
-    <a href="{% url 'products' shop_owner_data.id %}">See Products</a>
-    <a href="{% url 'add_product' shop_owner_data.id %}">Add Products</a>
+
 
     <table class="table" >
       <tr>
@@ -65,7 +77,7 @@
         <th>Order Date</th>
         <th>Product Pic</th>
       </tr>
-        <h2 class="text-center">Orders</h2>
+        <h2 class="text-center">All Orders</h2>
         {% for orders in l %}
           {% for order in orders %}
           <tr>
@@ -78,11 +90,5 @@
         {% endfor %}
 
     </table>
-
-<h1>Order list</h1>
-
-    {% for i in order_list %}
-      {{i}},
-    {% endfor %}
 
 {% endblock %}

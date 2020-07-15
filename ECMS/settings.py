@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ecmsapp',
+    'ecmsapp.apps.EcmsappConfig',
     'django_filters'
 ]
 
@@ -123,4 +123,5 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
+
 MEDIA_ROOT = os.path.join(BASE_DIR,'static/images')

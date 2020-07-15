@@ -25,20 +25,21 @@
         <div class="col-md-3">
           <div class="card card-body  pt-2 pl-2 pb-2">
                 <img class="post-pic" src="{{Post.post_picutre.url}}" alt="">
-                <a href="{% url 'shop_owner' Post.shop_owner.id %}">{{Post.shop_owner.name}}</a>
+                <b>{{Post.shop_owner.name}}</b>
       {% elif request.user.username == Post.shop_owner.name %}
         <div class="col-md-3">
           <div class="card card-body  pt-2 pl-2 pb-2">
                 <img class="post-pic" src="{{Post.post_picutre.url}}" alt="">
-                <a href="{% url 'shop_owner' Post.shop_owner.id %}">{{Post.shop_owner.name}}</a>
+                <b>{{Post.shop_owner.name}}</b>
       {% else %}
         <div class="col-md-3">
           <div class="card card-body  pt-2 pl-2 pb-2">
                 <img class="post-pic" src="{{Post.post_picutre.url}}" alt="">
-                <a href="{% url 'shop_owner_data' Post.shop_owner.id %}">{{Post.shop_owner.name}}</a>
+                <b>{{Post.shop_owner.name}}</b>
       {% endif %}
                 {{Post.post}}<br>
-                Posted On :{{Post.date_created}}<br>
+                <a href="{% url 'shop_owner_post_detail' Post.id %}">Detail</a>
+                {{Post.date_created}}<br>
           </div>
         </div>
       {% endfor %}
